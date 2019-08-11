@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
-import StockContainer from './StockContainer'
-import PortfolioContainer from './PortfolioContainer'
-import SearchBar from '../components/SearchBar'
-const API = 'http://localhost:3000/stocks'
+import React, { Component } from "react";
+import StockContainer from "./StockContainer";
+import PortfolioContainer from "./PortfolioContainer";
+import SearchBar from "../components/SearchBar";
+const API = "http://localhost:3000/stocks";
 class MainContainer extends Component {
   constructor() {
     super();
@@ -51,13 +51,13 @@ class MainContainer extends Component {
   comparePrice = (A, B) => {
     const a = A.price;
     const b = B.price;
-    return a - b
+    return a - b;
   };
 
   handleNameChange = () => {
     const newStocks = !this.state.nameChecked
       ? this.state.stocks.sort(this.compareName)
-      : this.state.backUp;
+      : [...this.state.backUp];
     this.setState({
       stocks: newStocks,
       nameChecked: !this.state.nameChecked
@@ -65,22 +65,23 @@ class MainContainer extends Component {
   };
 
   handlePriceChange = () => {
+    console.log(this.state.backUp);
     const newStocks = !this.state.priceChecked
-     ? this.state.stocks.sort(this.comparePrice)
-     : this.state.backUp;
+      ? this.state.stocks.sort(this.comparePrice)
+      : this.state.backUp;
     this.setState({
-      stocks: newStocks,
+      stocks: [...newStocks],
       priceChecked: !this.state.priceChecked
     });
   };
 
-  handleSearchChange = (e) => {
+  handleSearchChange = e => {
     const value = e.target.value;
     const newStocks = this.state.backUp.filter(stock => stock.type === value);
     this.setState({
       stocks: newStocks
-    })
-  }
+    });
+  };
 
   render() {
     return (
